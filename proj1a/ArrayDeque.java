@@ -3,56 +3,55 @@ public class ArrayDeque<T> {
     private int size;
     private int nextFirst;
     private int nextLast;
-    private static final int scaleUpFactor = 2;
-    private static final double scaleDownFactor = 0.5;
-    private static final double sizeUseFactor = 0.25;
-    private static final int arrRedLow = 16;
+    private static final int SCALE_UP_FACTOR = 2;
+    private static final double SCALE_DOWN_FACTOR = 0.5;
+    private static final double SIZE_USE_FACTOR = 0.25;
+    private static final int ARR_RED_LOW = 16;
     /** Creates an empty list. */
     public ArrayDeque() {
-        items = (T[])new Object[8];
+        items = (T[]) new Object[8];
         size = 0;
-        nextFirst = items.length/2;
-        nextLast = items.length/2 + 1;
+        nextFirst = items.length / 2;
+        nextLast = items.length / 2 + 1;
     }
 
-    public void resize(int capacity){
+    private void resize(int capacity) {
         T[] newArray = (T[]) new Object[capacity];
         int idxStartItems = addOne(nextFirst);
         int idxEndItems = minusOne(nextLast);
-        if (idxEndItems > idxStartItems){
+        if (idxEndItems > idxStartItems) {
             int cntCopyFirst = idxEndItems - idxStartItems + 1;
-            System.arraycopy(items, idxStartItems, newArray, capacity/4, cntCopyFirst);
-        }
-        else{
+            System.arraycopy(items, idxStartItems, newArray, capacity / 4, cntCopyFirst);
+         } else {
             int cntCopyFirst =  items.length - idxStartItems;
             int cntCopySecond = size - cntCopyFirst;
-            System.arraycopy(items, idxStartItems, newArray, capacity/4, cntCopyFirst);
-            System.arraycopy(items, 0, newArray, capacity/4 + cntCopyFirst, cntCopySecond);
+            System.arraycopy(items, idxStartItems, newArray, capacity / 4, cntCopyFirst);
+            System.arraycopy(items, 0, newArray, capacity / 4 + cntCopyFirst, cntCopySecond);
         }
         items = newArray;
-        nextFirst = capacity/4 - 1;
+        nextFirst = capacity / 4 - 1;
         nextLast = nextFirst + size + 1;
     }
 
-    private int minusOne(int x){
+    private int minusOne(int x) {
         x = x - 1;
-        if (x < 0){
-            x = items.length-1;
+        if (x < 0) {
+            x = items.length - 1;
         }
         return x;
     }
 
-    private int addOne(int x){
+    private int addOne(int x) {
         x = x + 1;
-        if (x == items.length){
+        if (x == items.length) {
             x = 0;
         }
         return x;
     }
     /** add to first of the array*/
-    public void addFirst(T item){
-        if (size == items.length){
-            resize((int) (items.length*scaleUpFactor));
+    public void addFirst(T item) {
+        if (size == items.length) {
+            resize((int) (items.length * SCALE_UP_FACTOR));
         }
         items[nextFirst] = item;
         nextFirst = minusOne(nextFirst);
@@ -60,9 +59,9 @@ public class ArrayDeque<T> {
     }
 
     /** add to end of the array*/
-    public void addLast(T item){
-        if (size == items.length){
-            resize((int) (items.length*scaleUpFactor));
+    public void addLast(T item) {
+        if (size == items.length) {
+            resize((int) (items.length * SCALE_UP_FACTOR));
         }
         items[nextLast] = item;
         nextLast = addOne(nextLast);
@@ -70,28 +69,28 @@ public class ArrayDeque<T> {
     }
 
     /** is ArrayDeque empty*/
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return (size == 0);
     }
 
     /** size the of array*/
-    public int size(){
+    public int size() {
         return size;
     }
 
     /** print ArrayDeque*/
-    public void printDeque(){
+    public void printDeque() {
         int i = 0;
-        while (i < size){
-            int idx = addOne(nextFirst+i);
+        while (i < size) {
+            int idx = addOne(nextFirst + i);
             System.out.print(items[idx] + " ");
             i += 1;
         }
     }
 
     /** remove first*/
-    public T removeFirst(){
-        if (size == 0){
+    public T removeFirst() {
+        if (size == 0) {
             return null;
         }
         int curIdx = addOne(nextFirst);
@@ -99,15 +98,15 @@ public class ArrayDeque<T> {
         items[curIdx] = null;
         nextFirst = addOne(nextFirst);
         size -= 1;
-        if (items.length >= arrRedLow && size < (int)(items.length*sizeUseFactor)){
-            resize((int) (items.length*scaleDownFactor));
+        if (items.length >= ARR_RED_LOW && size < (int) (items.length * SIZE_USE_FACTOR)) {
+            resize((int) (items.length * SCALE_DOWN_FACTOR));
         }
         return res;
     }
 
     /** remove last*/
-    public T removeLast(){
-        if (size == 0){
+    public T removeLast() {
+        if (size == 0) {
             return null;
         }
         int curIdx = minusOne(nextLast);
@@ -115,8 +114,8 @@ public class ArrayDeque<T> {
         items[curIdx] = null;
         nextLast = minusOne(nextLast);
         size -= 1;
-        if (items.length >= arrRedLow && size < (int)(items.length*sizeUseFactor)){
-            resize((int) (items.length*scaleDownFactor));
+        if (items.length >= ARR_RED_LOW && size < (int) (items.length * SIZE_USE_FACTOR)) {
+            resize((int) (items.length * SCALE_DOWN_FACTOR));
         }
         return res;
     }
@@ -125,13 +124,13 @@ public class ArrayDeque<T> {
     /** Gets the ith item in the array */
     public T get(int i) {
         int idx = nextFirst + 1 + i;
-        if (idx < items.length){
+        if (idx < items.length) {
             return items[idx];
         }
-        return items[idx-items.length];
+        return items[idx - items.length];
     }
-
-    public static void main(String[] args){
+    /*
+    public static void main(String[] args) {
         ArrayDeque<Integer> A = new ArrayDeque<>();
         System.out.println("A size: " + A.size());
         A.printDeque();
@@ -153,25 +152,23 @@ public class ArrayDeque<T> {
         A.printDeque();
 
 
-        /**test addLast*/
-        for (int i=0; i<24; i++){
-            A.addLast(i+1);
+        //test addLast
+        for (int i = 0; i < 24; i++) {
+            A.addLast( i + 1);
         }
         System.out.println("A size: " + A.size());
         A.printDeque();
         System.out.println('\n');
 
-        /**test removeFirst and removeLast*/
-        for (int i=0; i<24; i++){
+        //test removeFirst and removeLast
+        for (int i = 0; i < 24; i++) {
             A.removeFirst();
             A.removeLast();
         }
         System.out.println("A size: " + A.size());
         A.printDeque();
         System.out.println('\n');
-
-
-
-
     }
-} 
+    */
+}
+
