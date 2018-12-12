@@ -15,7 +15,8 @@ public class LinkedListDeque<T> {
         size = 0;
 
     }
-   public void addFirst(T item) {
+
+    public void addFirst(T item) {
         size += 1;
         Node node = new Node();
         node.item = item;
@@ -25,7 +26,7 @@ public class LinkedListDeque<T> {
         sentinel.next = node;
     }
 
-   public void addLast(T item) {
+    public void addLast(T item) {
         size += 1;
         Node node = new Node();
         node.item = item;
@@ -39,7 +40,7 @@ public class LinkedListDeque<T> {
         return (size == 0);
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
@@ -75,15 +76,14 @@ public class LinkedListDeque<T> {
 
     public T get(int index) {
         if (index < 0 || index > size - 1) {
-           return null;
+            return null;
         }
         Node ptr = sentinel;
         if (index < size / 2) {
-           //start from front
-           for (int i = 0; i <= index; i++) {
-               ptr = ptr.next;
-           }
-           return ptr.item;
+            for (int i = 0; i <= index; i++) {
+                ptr = ptr.next;
+            }
+            return ptr.item;
         } else {
             int revIndex = size - index - 1;
             for (int i = 0; i <= revIndex; i++) {
@@ -101,7 +101,7 @@ public class LinkedListDeque<T> {
         if (idx == 0) {
             return node.item;
         } else {
-            return getRecursiveHelper(node.next, idx-1);
+            return getRecursiveHelper(node.next, idx - 1);
         }
     }
     /*

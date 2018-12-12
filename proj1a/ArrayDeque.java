@@ -22,7 +22,7 @@ public class ArrayDeque<T> {
         if (idxEndItems > idxStartItems) {
             int cntCopyFirst = idxEndItems - idxStartItems + 1;
             System.arraycopy(items, idxStartItems, newArray, capacity / 4, cntCopyFirst);
-         } else {
+        } else {
             int cntCopyFirst =  items.length - idxStartItems;
             int cntCopySecond = size - cntCopyFirst;
             System.arraycopy(items, idxStartItems, newArray, capacity / 4, cntCopyFirst);
