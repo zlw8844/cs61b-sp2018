@@ -1,6 +1,6 @@
 
 public class NBody{
-	public static String backgroundImg = "images/starfield.jpg";
+	private static String backgroundImg = "images/starfield.jpg";
 	//note: this should be a staic method.
 	public static double readRadius(String file){
 		In in = new In(file);
@@ -30,14 +30,14 @@ public class NBody{
 		return allPlanets;
 	}
 
-	public static void drawBackgroud(Double universeRadius){
+	private static void drawBackgroud(Double universeRadius){
 		StdDraw.setScale(-universeRadius, universeRadius);
 		StdDraw.clear();
 		StdDraw.picture(0, 0, backgroundImg);
 		StdDraw.show();
 	}
 
-	public static void drawAllPlanets(Planet[] allPlanets){
+	private static void drawAllPlanets(Planet[] allPlanets){
 			for (Planet planet: allPlanets){
 			planet.draw();
 		}
