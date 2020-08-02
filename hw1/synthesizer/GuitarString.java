@@ -47,11 +47,9 @@ public class GuitarString {
         // TODO: Dequeue the front sample and enqueue a new sample that is
         //       the average of the two multiplied by the DECAY factor.
         //       Do not call StdAudio.play().
-        for (int i = 0; i < buffer.capacity(); i += 1) {
-            double front = buffer.dequeue();
-            double num = (front + buffer.peek()) * 0.5 * DECAY;
-            buffer.enqueue(num);
-        }
+        double front = buffer.dequeue();
+        double num = (front + buffer.peek()) * 0.5 * DECAY;
+        buffer.enqueue(num);
     }
 
     /* Return the double at the front of the buffer. */
